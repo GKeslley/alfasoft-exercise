@@ -27,3 +27,6 @@ Route::middleware([EnsureUserIsAuthenticated::class])->group(function () {
     Route::get('/contact/create', CreateContact::class)->name('contact.create');
     Route::get('/contacts/{contact}/edit', EditContact::class)->name('contact.edit');
 });
+Route::fallback(function() {
+    return view('errors.404');
+});
