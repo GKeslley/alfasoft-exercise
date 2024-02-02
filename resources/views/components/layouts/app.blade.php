@@ -5,12 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{{ $title ?? 'Page Title' }}</title>
+  <title>{{ $title ?? 'Home' }}</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body>
-  {{ $slot }}
+  @livewire('header')
+  <main class="container mx-auto grid">
+    {{ $slot }}
+  </main>
 </body>
 
 </html>
