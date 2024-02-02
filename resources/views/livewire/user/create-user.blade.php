@@ -1,19 +1,16 @@
-<div>
+<section>
   <form wire:submit="save" method="post">
     @csrf
 
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" wire:model.blur="name">
-    <div>@error('name') {{ $message }} @enderror</div>
+    <x-input type="text" name="name" id="name" wire:model.blur="name" label="Name" />
+    <div class="mb-3">@error('name') {{ $message }} @enderror</div>
 
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email" wire:model.blur="email">
-    <div>@error('email') {{ $message }} @enderror</div>
+    <x-input type="text" name="email" id="email" wire:model.blur="email" label="Email" />
+    <div class="mb-3">@error('email') {{ $message }} @enderror</div>
 
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" wire:model.blur="password">
-    <div>@error('password') {{ $message }} @enderror</div>
+    <x-input type="password" name="password" id="password" wire:model.blur="password" label="Password" />
+    <div class="mb-3">@error('password') {{ $message }} @enderror</div>
 
-    <button type="submit">Create</button>
+    <x-button text="Create" />
   </form>
-</div>
+</section>
