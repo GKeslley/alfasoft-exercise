@@ -11,7 +11,7 @@
 
 <body>
   @livewire('header')
-  <main class="container mx-auto grid">
+  <main class="container mx-auto grid px-2">
     {{ $slot }}
   </main>
 </body>

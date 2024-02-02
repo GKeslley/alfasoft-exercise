@@ -13,7 +13,7 @@
     <tbody>
       <tr>
         <td class="border border-slate-300">
-          <a href="/contacts/{{$contact->id}}" wire:navigate>{{$contact->name}}</a>
+          <a href="/contacts/{{$contact->id}}" wire:navigate class="underline underline-offset-3">{{$contact->name}}</a>
         </td>
         <td class="border border-slate-300">{{$contact->email_address}}</td>
         <td class="border border-slate-300">{{$contact->contact}}</td>
