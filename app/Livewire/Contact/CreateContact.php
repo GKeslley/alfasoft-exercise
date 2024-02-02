@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Contact;
 
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Contact;
 use App\Repositories\Eloquents\ContactRepository;
@@ -17,37 +18,25 @@ class CreateContact extends Component
     #[Validate]
     public string $email_address = '';
 
-    public function mount()
-    {
-        if (!Auth::check()) {
-            $this->skipRender();
-            $this->redirectRoute('account.login');
-        }
-    }
-
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => 'bail|required|min:5|max:255',
             'email_address' => 'bail|required|email|unique:contacts',
-            'contact' => 'required|digits:9|regex:/^([0-9\s\-\+\(\)]*)$/|unique:contacts'
+            'contact' => 'required|digits:9|unique:contacts'
         ];
     }
 
-    public function messages() 
-    {
-        return [
-            'contact.regex' => 'The field must be a valid phone number',
-        ];
-    }
-
-    public function save(ContactRepository $repository)
+    public function save(ContactRepository $repository) : void
     {
         $validated = $this->validate();
         $contact = $repository->store($validated);
         $this->reset(['name', 'contact', 'email_address']); 
+        session()->flash('status', 'Contact successfully created.');
+        $this->redirectRoute('index');
     }
 
+    #[Title('Create Contact | Alfasoft')] 
     public function render()
     {
         return view('livewire.contact.create-contact');

@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Contact;
 
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Contact;
 use App\Repositories\Eloquents\ContactRepository;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\View\View;
 
 class EditContact extends Component
 {
@@ -18,21 +20,17 @@ class EditContact extends Component
     public string $email_address = '';
     public Contact $contactModel;
 
-    public function mount(Contact $contact)
+    public function mount(Contact $contact) : void
     {
-        if (!Auth::check()) {
-            $this->skipRender();
-            $this->redirectRoute('account.login');
-        }
-        $this->contactModel = $contact;
         if ($contact) {
+            $this->contactModel = $contact;
             $this->fill(
                 $contact->only('name', 'contact', 'email_address')
             );
         }
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => 'bail|required|min:5|max:255',
@@ -41,21 +39,24 @@ class EditContact extends Component
         ];
     }
 
-    public function messages() 
+    public function messages() : array
     {
         return [
             'contact.regex' => 'The field must be a valid phone number',
         ];
     }
 
-    public function update(ContactRepository $repository)
+    public function update(ContactRepository $repository) : void
     {
         $validated = $this->validate();
-        $repository->update($this->contactModel, $validated);
-        session()->flash('status', 'Contact successfully updated.');
+        $isUpdated = $repository->update($this->contactModel, $validated);
+        if ($isUpdated) {
+            session()->flash('status', 'Contact successfully updated.');
+        }
         $this->redirectRoute('index');
     }
 
+    #[Title('Edit Contact | Alfasoft')] 
     public function render()
     {
         return view('livewire.contact.edit-contact');

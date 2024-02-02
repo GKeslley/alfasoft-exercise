@@ -13,7 +13,7 @@ class LoginUser extends Component
     #[Validate]
     public string $password = '';
 
-    public function mount()
+    public function mount() : void
     {
         if (Auth::check()) {
             $this->skipRender();
@@ -21,7 +21,7 @@ class LoginUser extends Component
         }
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'email' => 'required|email',
@@ -40,6 +40,7 @@ class LoginUser extends Component
         $this->redirectRoute('account.login');
     }
 
+    #[Title('Log In | Alfasoft')]
     public function render()
     {
         return view('livewire.user.login-user');

@@ -17,7 +17,7 @@ class CreateUser extends Component
     #[Validate]
     public string $password = '';
 
-    public function mount()
+    public function mount() : void
     {
         if (Auth::check()) {
             $this->skipRender();
@@ -25,7 +25,7 @@ class CreateUser extends Component
         }
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'name' => 'required|min:3|max:255',
@@ -34,7 +34,7 @@ class CreateUser extends Component
         ];
     }
 
-    public function save(UserRepository $repository)
+    public function save(UserRepository $repository) : void
     {
         $validated = $this->validate();
         $userCreated = $repository->store($validated);
@@ -42,6 +42,7 @@ class CreateUser extends Component
         $this->redirectRoute('index');
     }
 
+    #[Title('Register | Alfasoft')]
     public function render()
     {
         return view('livewire.user.create-user');
